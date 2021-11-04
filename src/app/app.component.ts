@@ -1,26 +1,26 @@
 import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { jqxSchedulerComponent } from 'jqwidgets-ng/jqxscheduler';
+
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html'
 })
 export class AppComponent implements AfterViewInit {
     @ViewChild('schedulerReference', { static: false }) scheduler: jqxSchedulerComponent;
+
+    AppointmentAdd(event: any): void 
+    {
+      const eventDetails = event.args;
+      console.log(event)
+      console.log(eventDetails)
+    }
+
     ngAfterViewInit(): void {
+        
+        this.scheduler.beginAppointmentsUpdate();
         this.scheduler.ensureAppointmentVisible('1bc1fe54-3232-40dc-8876-510267f00deb');
         
         let dataAdapter2: any = new jqx.dataAdapter({
-          // dataType: 'array',
-          // dataFields: [
-          //   {name: 'id', type: 'string'},
-          //   {name: 'description', type: 'string'},
-          //   {name: 'location', type: 'string'},
-          //   {name: 'subject', type: 'string'},
-          //   {name: 'calendar', type: 'string'},
-          //   {name: 'start', type: 'date'},
-          //   {name: 'end', type: 'date'}
-          // ],
-          //localData: null,
           dataType: 'json',
           dataFields: [
             { name: 'id', type: 'string' },
@@ -32,8 +32,7 @@ export class AppComponent implements AfterViewInit {
             { name: 'completed', type: 'string' },
             { name: 'archived', type: 'string' },
             { name: 'priority', type: 'string' },
-            // { name: 'style', type: 'string' },
-            // { name: 'calendar', type: 'string' },
+
             { name: 'start_date', type: 'date'},
             { name: 'end_date', type: 'date' }
           ],
@@ -43,9 +42,64 @@ export class AppComponent implements AfterViewInit {
 
         setTimeout(() => {
           this.scheduler.source (dataAdapter2 );
-          this.scheduler.date(new jqx.date('2020-05-22T12:00:00'))
+          this.scheduler.date(new jqx.date('2020-05-22T12:00:00'));
+
+          
         }, 1000);
-    
+
+
+        let newAppointment:object = {
+          id: "1bc1fe54-3232-40dc-8876-510267f00deb",
+  
+          user_id: "d5e2929e-e9c3-44dd-a232-0e7d5026c386",
+
+          user_name: "Lee",
+
+          name: "Lee Test",
+
+          description: "Test7",
+
+          start_date: "2020-05-11T12:00:00",
+
+          end_date: "2020-05-11T12:30:00",
+
+          completed: false,
+
+          archived: false,
+
+          priority: "1",
+
+          audit_sequence: 15,
+          resourceId: 'calendar'
+      }
+      this.scheduler.addAppointment(newAppointment);
+       
+
+      const resources = {
+
+        dataField: 'user_id',
+
+        orientation: 'horizontal',
+
+        source: new jqx.dataAdapter(this.source)
+
+      };
+
+      this.scheduler.resources(resources);
+
+ 
+      this.scheduler.endAppointmentsUpdate();
+      setTimeout(() => {
+        let v = this.scheduler.getAppointments();
+          console.log(v);
+        this.scheduler.addAppointment(newAppointment);
+      }, 2000);
+
+      setTimeout(() => {
+        
+        let v = this.scheduler.getAppointments()
+        console.log(v)
+      }, 2500);
 
     }
 	getWidth() : any {
