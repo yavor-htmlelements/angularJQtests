@@ -1,4 +1,5 @@
 <jqxScheduler #schedulerReference
+              (onAppointmentAdd)="AppointmentAdd($event)"
               [date]="date" [width]="800" [height]="600" [source]="dataAdapter" [showLegend]="true" [view]="'monthView'"
               [appointmentDataFields]="appointmentDataFields" [resources]="resources" [views]="views">
 </jqxScheduler>
