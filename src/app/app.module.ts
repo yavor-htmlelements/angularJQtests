@@ -7,6 +7,7 @@ import { jqxGridModule } from 'jqwidgets-ng/jqxgrid';
 import { jqxDropDownListModule } from 'jqwidgets-ng/jqxdropdownlist';
 import { jqxCheckBoxModule } from 'jqwidgets-ng/jqxcheckbox';  
 import { jqxSchedulerModule } from 'jqwidgets-ng/jqxscheduler';
+import { jqxKnobModule } from 'jqwidgets-ng/jqxknob';
 @NgModule({
   declarations: [
     AppComponent
@@ -17,6 +18,7 @@ import { jqxSchedulerModule } from 'jqwidgets-ng/jqxscheduler';
     jqxGridModule,
     jqxDropDownListModule,
     jqxCheckBoxModule,
+    jqxKnobModule,
     jqxSchedulerModule
   ],
   providers: [],

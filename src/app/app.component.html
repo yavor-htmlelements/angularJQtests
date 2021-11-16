@@ -1,5 +1,10 @@
+
+
 <jqxScheduler #schedulerReference
-              (onAppointmentAdd)="AppointmentAdd($event)"
+              
+             
+              [rowsHeight]="400"
               [date]="date" [width]="800" [height]="600" [source]="dataAdapter" [showLegend]="true" [view]="'monthView'"
-              [appointmentDataFields]="appointmentDataFields" [resources]="resources" [views]="views">
+              [appointmentDataFields]="appointmentDataFields" [views]="views">
 </jqxScheduler>
+<img src="../sampledata/appointments.txt" alt="">
