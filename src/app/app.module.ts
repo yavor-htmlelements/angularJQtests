@@ -8,6 +8,8 @@ import { jqxDropDownListModule } from 'jqwidgets-ng/jqxdropdownlist';
 import { jqxCheckBoxModule } from 'jqwidgets-ng/jqxcheckbox';  
 import { jqxSchedulerModule } from 'jqwidgets-ng/jqxscheduler';
 import { jqxKnobModule } from 'jqwidgets-ng/jqxknob';
+import { jqxDataTableModule } from 'jqwidgets-ng/jqxdatatable';
+import { jqxButtonModule } from 'jqwidgets-ng/jqxbuttons';
 @NgModule({
   declarations: [
     AppComponent
@@ -19,7 +21,9 @@ import { jqxKnobModule } from 'jqwidgets-ng/jqxknob';
     jqxDropDownListModule,
     jqxCheckBoxModule,
     jqxKnobModule,
-    jqxSchedulerModule
+    jqxSchedulerModule,
+    jqxDataTableModule,
+    jqxButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

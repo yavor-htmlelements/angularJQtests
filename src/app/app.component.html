@@ -1,9 +1,14 @@
 
-
 <jqxScheduler #schedulerReference
-              
-             
+              (onViewChange)="ViewChange($event)"
+              (contextmenu)="schedulerClick($event)"
+              (onAppointmentAdd)="AppointmentAdd($event)"
               [rowsHeight]="400"
-              [date]="date" [width]="800" [height]="600" [source]="dataAdapter" [showLegend]="true" [view]="'monthView'"
-              [appointmentDataFields]="appointmentDataFields" [views]="views">
+              [date]="date" [width]="800" [height]="600" [source]="dataAdapter" [view]="'monthView'"
+              [appointmentDataFields]="appointmentDataFields" [resources]="resources" [views]="views"
+              [width]="'100%'" [height]="'100%'"  [showLegend]="false"
+              [editDialog]="false"
+              [appointmentOpacity]="0.6" 
+              [appointmentTooltips]="true" 
+              >
 </jqxScheduler>
