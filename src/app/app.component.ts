@@ -1,311 +1,161 @@
-import { Component, ViewChild, AfterViewInit } from '@angular/core';
-import { jqxSchedulerComponent } from 'jqwidgets-ng/jqxscheduler';
-import { generatedata } from './../sampledata/generatedata';
-import { jqxDataTableComponent } from 'jqwidgets-ng/jqxdatatable';
+import { Component, ViewChild, AfterViewInit, ViewEncapsulation } from '@angular/core';
+import { jqxGridComponent } from 'jqwidgets-ng/jqxgrid';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['app.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
-export class AppComponent implements AfterViewInit {
- 
-  ViewChange(event: any): void 
+export class AppComponent {
+  @ViewChild('myGrid') myGrid: jqxGridComponent; 
+
+  Filter(event: Event): void 
   {
-    alert(1)
-    if (event.args.newViewType == 'dayView'){
-      let appointmets = document.querySelectorAll('.jqx-scheduler-appointment');
-
-      for(let i = 0; i < appointmets.length; i++) {
-        appointmets[i].classList.add('fix');
-      }
-    }
-    else {
-      let appointmets = document.querySelectorAll('.jqx-scheduler-appointment');
-
-      for(let i = 0; i < appointmets.length; i++) {
-        appointmets[i].classList.remove('fix');
-      }
-    }
-     
+      let allRowsAfterFilter: Array<any> = this.myGrid.getrows();
+      console.log(allRowsAfterFilter)
   }
 
-
-  @ViewChild('schedulerReference', { static: false }) scheduler: jqxSchedulerComponent;
-
-  AppointmentAdd(event: any): void {
-    const appointmenData = event.args.appointment;
-    console.log(appointmenData)
-  }
-
-  ngAfterViewInit(): void {
-  
-
-    this.scheduler.beginAppointmentsUpdate();
-    this.scheduler.ensureAppointmentVisible('1bc1fe54-3232-40dc-8876-510267f00deb');
-    this.scheduler.ensureAppointmentVisible('sdfsdfsdfsdgsf');
-
-
-    let testDataTimes = [['2021-11-15T09:05:01.623Z', '2021-11-15T09:16:01.000Z'], // Maya
-
-    ['2021-11-15T09:18:01.000Z', '2021-11-15T09:29:01.623Z'], // Anderson
-
-    ['2021-11-15T09:35:01.623Z', '2021-11-15T09:42:01.000Z'], // Kotts
-
-    ['2021-11-15T09:44:01.623Z', '2021-11-15T09:56:01.000Z']  // Huff
-    ];
-    
-    let newAppointment: object = {
-      id: "1bc1fe54-3232-40dc-8876-510267f00deb",
-
-      user_id: "d5e2929e-e9c3-44dd-a232-0e7d5026c386",
-
-      user_name: "Lee",
-
-      name: "Lee Test",
-
-      description: "1111111111111",
-
-      start_date: new Date("2021-11-15T09:05:01.623Z").toISOString().replace('Z', ''),
-
-      end_date: new Date("2021-11-15T09:16:01.000Z").toISOString().replace('Z', ''),
-
-      completed: false,
-
-      archived: false,
-
-      priority: "1",
-
-      audit_sequence: 15,
-
-      resourceId: 'calendar'
-    }
-
-    let newAppointment2: object = {
-      id: "sdfsdfsdfsdgsf",
-
-      user_id: "131231212312-e9c3-44dd-a232-0e7d5026c386",
-
-      user_name: "Lee",
-
-      name: "Lee Test",
-
-      description: "2222222222222",
-
-      start_date: new Date('2021-11-15T09:18:33.000Z').toISOString().replace('Z', ''),
-
-      end_date: new Date("2021-11-15T09:29:01.623Z").toISOString().replace('Z', ''),
-
-      completed: false,
-
-      archived: false,
-
-      priority: "1",
-
-      audit_sequence: 15,
-
-      resourceId: 'calendar'
-    }
-
-
-    let newAppointment3: object = {
-      id: "sdfsdfsdfsdgsf",
-
-      user_id: "3232131231212312-e9c3-44dd-a232-0e7d5026c386",
-
-      user_name: "Lee",
-
-      name: "Lee Test",
-
-      description: "33333333333333",
-
-      start_date: new Date('2021-11-15T09:35:01.623Z').toISOString().replace('Z', ''),
-
-      end_date: new Date("2021-11-15T09:42:01.000Z").toISOString().replace('Z', ''),
-
-      completed: false,
-
-      archived: false,
-
-      priority: "1",
-
-      audit_sequence: 15,
-
-      resourceId: 'calendar'
-    }
-    let newAppointment4: object = {
-      id: "sdfsdfsdfsdgsf",
-
-      user_id: "1312323231212312-e9c3-44dd-a232-0e7d5026c386",
-
-      user_name: "Lee",
-
-      name: "Lee Test",
-
-      description: "44444444444",
-
-      start_date: new Date('2021-11-15T09:44:01.623Z').toISOString().replace('Z', ''),
-
-      end_date: new Date("2021-11-15T09:56:01.000Z").toISOString().replace('Z', ''),
-
-      completed: false,
-
-      archived: false,
-
-      priority: "1",
-
-      audit_sequence: 15,
-
-      resourceId: 'calendar'
-    }
-    this.scheduler.addAppointment(newAppointment2);
-
-    this.scheduler.addAppointment(newAppointment);
-
-
-    const resources = {
-
-      dataField: 'user_id',
-
-      orientation: 'horizontal',
-
-      source: new jqx.dataAdapter(this.source)
-
-    };
-
-    this.scheduler.resources(resources);
-
-
-    this.scheduler.endAppointmentsUpdate();
+  readyHandler():void{
     setTimeout(() => {
-      let v = this.scheduler.getAppointments();
-      console.log(v);
-      this.scheduler.addAppointment(newAppointment);
-      this.scheduler.addAppointment(newAppointment2);
-      this.scheduler.addAppointment(newAppointment4);
-      this.scheduler.addAppointment(newAppointment3);
-
+      // const toolbar: any = document.getElementById('filtergrid'),
+      // searchInput: any = toolbar.querySelector('.jqx-input-group');
+      // searchInput.firstChild.innerText ="Your Text:"
     }, 100);
-
-    setTimeout(() => {
-
-      let v = this.scheduler.getAppointments()
-      console.log(v)
-    }, 2500);
-
-
   }
 
-  schedulerClick(event: any) {
+  data: any[] = this.generateData();
+  source: any =
+  {
+      localdata: this.data,
+      datatype: 'array',
+      datafields:
+      [
+          { name: 'firstname', type: 'string' },
+          { name: 'lastname', type: 'string' },
+          { name: 'productname', type: 'string' },
+          { name: 'quantity', type: 'number' },
+          { name: 'price', type: 'number' },
+          { name: 'total', type: 'number' }
+      ]
+  };
+  dataAdapter: any = new jqx.dataAdapter(this.source);
+  columns: any[] = [
+    { text: 'Name', datafield: 'firstname', width: 120,
+      rendered: function (columnHeaderElement) {
+          const buttonContainer1 = document.createElement('div');
+          const imgurl = 'https://cdn5.vectorstock.com/i/1000x1000/13/54/plus-icon-vector-22881354.jpg';
 
-    event.preventDefault()
-    console.log(123)
-    let contextMenu = document.querySelector('.jqx-menu');
-    console.log(contextMenu);
-    return false;
-  }
+          const options = {
+              width: '100%',
+              imgSrc: imgurl, 
+              imgPosition: 'center',
+          };
+          buttonContainer1.id = `buttonContainerColumn_jqxButton`;
 
-  getWidth(): any {
+          columnHeaderElement[0].appendChild(buttonContainer1)
+          setTimeout(() => {
+              const myButton = jqwidgets.createInstance(`#buttonContainerColumn_jqxButton`, 'jqxButton', options);
+              buttonContainer1.parentElement.style.display = 'flex';
+
+              const btnParentElFirstChild:any = buttonContainer1.parentElement.firstElementChild
+              btnParentElFirstChild.style.display = 'none';
+          }, 10);
+          return columnHeaderElement[0]
+      }, 
+    createwidget: (row, column, value, htmlElement) => {
+          let container = document.createElement('div');
+
+          const buttonContainer1 = document.createElement('div');
+          const buttonContainer2 = document.createElement('div');
+          const id = row.boundindex;
+          buttonContainer1.id = `buttonContainer1${id}`;
+          buttonContainer2.id = `buttonContainer2${id}`;
+          container.id = id;
+
+          const imgurl = 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/OOjs_UI_icon_edit-ltr.svg/1024px-OOjs_UI_icon_edit-ltr.svg.png';
+          const imgurl2 = 'https://image.flaticon.com/icons/png/512/1214/1214428.png';
+
+          const options = {
+              width: '100%',
+              imgSrc: imgurl, 
+              imgPosition: 'center', textPosition: 'center', textImageRelation: 'imageAboveText'
+          };
+          const options2 = {
+              width: '100%',
+              imgSrc: imgurl2,  
+              imgPosition: 'center', textPosition: 'center', textImageRelation: 'imageAboveText'
+          };
+
+          container.appendChild(buttonContainer1);
+          container.appendChild(buttonContainer2);
+          htmlElement.appendChild(container);
+
+          container.style.display = 'flex';
+          
+          const myButton = jqwidgets.createInstance(`#buttonContainer1${id}`, 'jqxButton', options);
+          const delButton = jqwidgets.createInstance(`#buttonContainer2${id}`, 'jqxButton', options2);
+          
+
+          myButton.addEventHandler('click', () => {
+          console.log('Editar')
+          });
+
+          delButton.addEventHandler('click', () => {
+          console.log('Borrar')
+
+          });
+
+          },
+          initwidget: (row, column, value, htmlElement) => {
+          //   htmlElement.children[0].children[1].innerHTML = value;
+          }
+    },
+      { text: 'Last Name', datafield: 'lastname', width: 120 },
+      { text: 'Product', datafield: 'productname', width: 180 },
+      { text: 'Quantity', datafield: 'quantity', width: 80, cellsalign: 'right' },
+      { text: 'Unit Price', datafield: 'price', width: 90, cellsalign: 'right', cellsformat: 'c2' },
+      { text: 'Total', datafield: 'total', cellsalign: 'right', cellsformat: 'c2' }
+  ];
+
+  getWidth() : any {
     if (document.body.offsetWidth < 850) {
       return '90%';
     }
-
+    
     return 850;
   }
-
-
-
-  appointments: Array<object> = [
-
-
-  ]
-
-
-  source: any =
-    {
-      // dataType: 'array',
-      // dataFields: [
-      //   {name: 'id', type: 'string'},
-      //   {name: 'description', type: 'string'},
-      //   {name: 'location', type: 'string'},
-      //   {name: 'subject', type: 'string'},
-      //   {name: 'calendar', type: 'string'},
-      //   {name: 'start', type: 'date'},
-      //   {name: 'end', type: 'date'}
-      // ],
-      //localData: null,
-      dataType: 'json',
-      dataFields: [
-        { name: 'id', type: 'string' },
-        { name: 'user_id', type: 'string' },
-        { name: 'user_name', type: 'string' },
-        { name: 'name', type: 'string' },
-        // { name: 'status', type: 'string' },
-        { name: 'description', type: 'string' },
-        { name: 'completed', type: 'string' },
-        { name: 'archived', type: 'string' },
-        { name: 'priority', type: 'string' },
-        // { name: 'style', type: 'string' },
-        // { name: 'calendar', type: 'string' },
-        { name: 'start_date', type: 'date' },
-        { name: 'end_date', type: 'date' }
-      ],
-      id: 'id',
-      localData: this.appointments
-    };
-
-  dataAdapter: any = new jqx.dataAdapter(this.source);
-
-  date: any = new jqx.date('2021-11-15');
-
-  appointmentDataFields: any =
-    {
-      from: 'start_date',
-      to: 'end_date',
-      id: 'id',
-      description: 'description',
-      // location: 'location',
-      subject: 'description',
-      resourceId: 'calendar'
-    };
-  resources: any =
-    {
-      //colorScheme: 'scheme05',
-      dataField: 'calendar',
-      source: new jqx.dataAdapter(this.source)
-    };
-  views: any[] =
-    [
-      {
-
-        type: 'dayView',
-
-        showWeekends: true,
-
-        // timeRuler: {scale: this.scale[this.currentZoomIndex], formatString: 'hh:mm tt', width: '80'},
-
-        timeRuler: { scale: 'fiveMinutes', },
-
-        appointmentsRenderMode: 'exactTime',
-
-        workTime:
-
-        {
-
-          fromDayOfWeek: 1,
-
-          toDayOfWeek: 6,
-
-          fromHour: 7,
-
-          toHour: 24
-
-        }
-
-      },
-      { type: 'monthView', monthRowAutoHeight: true },
-      'weekView',
-      'timelineDayView',
-      'agendaView',
-    ];
-
+  generateData(): any[] {
+      let data = new Array();
+      let firstNames =
+          [
+              'Andrew', 'Nancy', 'Shelley', 'Regina', 'Yoshi', 'Antoni', 'Mayumi', 'Ian', 'Peter', 'Lars', 'Petra', 'Martin', 'Sven', 'Elio', 'Beate', 'Cheryl', 'Michael', 'Guylene'
+          ];
+      let lastNames =
+          [
+              'Fuller', 'Davolio', 'Burke', 'Murphy', 'Nagase', 'Saavedra', 'Ohno', 'Devling', 'Wilson', 'Peterson', 'Winkler', 'Bein', 'Petersen', 'Rossi', 'Vileid', 'Saylor', 'Bjorn', 'Nodier'
+          ];
+      let productNames =
+          [
+              'Black Tea', 'Green Tea', 'Caffe Espresso', 'Doubleshot Espresso', 'Caffe Latte', 'White Chocolate Mocha', 'Cramel Latte', 'Caffe Americano', 'Cappuccino', 'Espresso Truffle', 'Espresso con Panna', 'Peppermint Mocha Twist'
+          ];
+      let priceValues =
+          [
+              '2.25', '1.5', '3.0', '3.3', '4.5', '3.6', '3.8', '2.5', '5.0', '1.75', '3.25', '4.0'
+          ];
+      for (let i = 0; i < 200; i++) {
+          let row = {};
+          let productindex = Math.floor(Math.random() * productNames.length);
+          let price = parseFloat(priceValues[productindex]);
+          let quantity = 1 + Math.round(Math.random() * 10);
+          row['firstname'] = firstNames[Math.floor(Math.random() * firstNames.length)];
+          row['lastname'] = lastNames[Math.floor(Math.random() * lastNames.length)];
+          row['productname'] = productNames[productindex];
+          row['price'] = price;
+          row['quantity'] = quantity;
+          row['total'] = price * quantity;
+          data[i] = row;
+      }
+      return data;
+  }
 }
